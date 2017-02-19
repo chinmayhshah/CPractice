@@ -1,0 +1,27 @@
+Bit Maniupltion 
+
+Set 
+num |= (1<<pos);
+
+Clear 
+num &= (~(1<<pos));
+
+Toggle 
+num  ^= (1<<pos);
+
+Inverting 
+x = ~num
+
+Striping off lowest set bit 
+May not eork for 2 digit number 
+X = X & (X-1)
+1100
+
+1100 & 1011
+1000
+
+TO get the  lowest set bit 
+X & (~X+1)
+
+
+

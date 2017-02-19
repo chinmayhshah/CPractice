@@ -1,0 +1,114 @@
+//Static variable return and update from driver /main function
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+
+struct test_struct{
+  int data;
+  char array[10];
+  float pi;
+  double test_double;
+    
+};
+
+union test_union{
+  int data;
+  char array[10];
+  float pi;
+  double test_double;
+    
+};
+//int globalvalue =20;
+int globalvalue;
+//static int i;
+
+//static int i;
+
+
+int * returnGlobal(){
+
+  return &globalvalue;
+}
+
+// return Static(by address)
+int *returnStatic(){
+  //static int i =10;
+  static int i;
+  printf("Value of i(static): %d \n",i);
+  return &i;
+}
+
+/*
+int *returnPointerAuto(){
+  int i =10;
+
+  printf("Value of i: %d \n",i);
+  return &i;// cant return address of local variable
+}
+*/
+
+//return Auto(by value)
+int returnAuto(){
+  int i =10;
+  printf("Value of i(Auto): %d \n",i);
+  return i;// cant return value of local variable
+}
+
+int main ()
+{
+  int *temp=(int*)malloc(sizeof(int));
+  union test_union u;
+  struct test_struct s;
+  
+  s.data =22;
+  strcpy(s.array, "Chinmay");
+  
+  u.data =32;
+  strcpy(u.array, "Shah");
+  
+  //Sample of difference between Union and Structure 
+  printf("Size of union %ld\n",sizeof(u));
+  printf("Size of struct %ld\n",sizeof(s));
+  
+  printf("Data %d , %s \n",s.data,s.array);
+  printf("Data %d , %s \n",u.data,u.array);
+  
+  u.data =44;
+  printf("Data %d \n",u.data);
+  strcpy(u.array, "Hitesh");
+  printf("Data %s \n",u.array);
+  
+  
+  
+  printf("\n\n Experiment with static storage class\n\n");
+  temp = returnStatic();
+  printf("Return of Static value %d \n",*temp);
+  //UPdate the value of
+  *temp = 20;
+  printf("update value of Static value %d \n",*temp);
+
+  temp = returnStatic();
+  printf("Return of Static value %d\n",*temp);
+
+  printf("\n\nExperiment with auto storage class\n\n");
+  //temp = returnPointerAuto(); //invalid
+  *temp = returnAuto();
+  printf("Return of Auto value %d\n",*temp);
+
+  printf("\n\nExperiment with global variable\n\n");
+  temp = returnGlobal();
+  printf("Return Global value %d\n",*temp);
+  //globalvalue=30;
+  printf("Direct Global value %d\n",globalvalue);
+  temp = returnGlobal();
+  printf("Return updated Global value %d\n",*temp);
+
+  //free(temp);/* invalid as the memory allocated in Data seg (initialized area) */
+  temp=NULL;//remove dangling pointer
+  
+  
+  
+}

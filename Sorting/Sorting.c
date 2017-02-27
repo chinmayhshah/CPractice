@@ -142,12 +142,16 @@ void Merge(int Arr[],int start,int mid,int end){
 	while (i<l1 && j<l2){//Breaks if one or both arrays complete 
 		if(LeftArr[i]<=RightArr[j]){
 			Arr[k]=LeftArr[i];
+
 			i++;
 		}	
 		else
 		{
 			Arr[k]=RightArr[j];
 			j++;
+		}
+		if(LeftArr[i]%7==0){
+			printf("Found element @ %d\n",LeftArr[i]);
 		}
 		k++;
 
@@ -182,7 +186,12 @@ void MergeSort(int Arr[],int start,int end){
 		MergeSort(Arr,start,mid);
 		MergeSort(Arr,mid+1,end);
 		
+		if(start==mid && Arr[start]%7==0){
+			//printf("print %d",Arr[start]);
+		}
+			
 		Merge(Arr,start,mid,end);
+
 	}	
 }
 
@@ -213,14 +222,14 @@ void MergeSort(int Arr[],int start,int end){
 int main ()
  {
 
-  int TestArr[]={1,9,6,7,8,2,4,9};
+  int TestArr[]={1,7,3,5,14,10,21,6};
   int size = sizeof(TestArr)/sizeof(TestArr[0]);
   printf("Array Before Sorting");
   printArray(TestArr,size);
  // BubbleSort(TestArr,size); 		
  // InsertSort(TestArr,size);	
   MergeSort(TestArr,0,size-1);	
-  printArray(TestArr,size);
+  //printArray(TestArr,size);
  		
 
 

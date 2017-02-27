@@ -92,13 +92,36 @@ void opt_my_memmove(void * dest,void * src,int size_n){
 
 }
 
+//Strcat and Strcpy in one line 
+void my_strcat(char *dest,char *src){
 
+	return;
+
+}
+
+
+
+void twoDArray(int *Arr,int r ,int c){
+
+	int i=0,j=0;
+
+	for(i=0;i<r;i++)
+		for (j = 0; j < c; j++)
+		{
+			printf("%d\n", (*(Arr+i*c)+j));
+		}
+
+}
 
 
 
 int main (){
 
-	printf("implementation of memcpy\n");
+
+
+	int A[][3]={{1,4,5},{7,6,8}};
+	twoDArray((int *)A,2,3);
+	//printf("implementation of memcpy\n");
 	/*
 	char Str[] ="Chinmay Shah";
 	char destStr[100];
@@ -132,12 +155,12 @@ int main (){
 		printf("%d\n",dest_a[i] ); 
 	}
 	*/
-	char Str[] ="Chinmay Shah";
+	//char Str[] ="Chinmay Shah";
 	//char destStr[100];
 	//my_memcpy(destStr,Str,strlen(Str)+1);	
-	opt_my_memmove(Str+5,Str,strlen(Str)+1);
+	//opt_my_memmove(Str+5,Str,strlen(Str)+1);
 	//my_memmove(Str+5,Str,strlen(Str)+1);
-	printf("dest Str => %s\n",Str);
+	//printf("dest Str => %s\n",Str);
 
 	//Overlap condition 
 

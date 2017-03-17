@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <math.h>
+#include <stdlib.h>
 
 #define INT_SIZE 32
 
@@ -61,6 +63,47 @@ int caltotal(int n){
 }
 
 
+int divbythree(int num){
+
+    int even=0,odd=0;
+
+
+    /*
+    //may take  less loop during best case
+    int oddcal = num & 0x5555;
+    int evencal = num & 0xAAAA;
+    if(num<0){
+            num = num * -1;
+    }
+    while(oddcal){
+        oddcal &= (oddcal -1);
+        odd++;
+    }
+
+    while(evencal){
+        evencal &= (evencal -1);
+        even++;
+    }
+    */
+
+    while(num){
+        if(num & 0x01){
+            odd++;
+        }
+        num = num >> 1;
+
+        if(num & 0x01){
+            even++;
+        }
+        num = num >> 1;
+    }
+    if(abs(even - odd)%3 ==0)
+        return 0;
+    else
+        return 1;
+
+}
+
 // IN even numbers repeating 
 //detect single unique number 
 int detectonce(int Arr[],int size){
@@ -95,7 +138,7 @@ void detectwounique(int Arr[],int size){
     for (i = 0; i < size; ++i)
     {
         if(lbitSet & Arr[i]){
-            result[0] ^= Arr[i] ;
+            result[0] = Arr[i] ;
         }
     }
 
@@ -103,6 +146,7 @@ void detectwounique(int Arr[],int size){
     result[1] = Xortotal ^ result[0];
 
     printf("Two missing numbers are %d & %d \n",result[0],result[1] );
+    Arr[0] =5 ;
 
  }
 
@@ -184,10 +228,68 @@ int reverse (int n){
 }
 
 
+int *tworepeating(int arr[],int size){
+    
+    int TotalXOR=0,nXOR=0,lbitSet=0;
+    int i=0,n=size-2;
+    int *result=(int *)malloc(sizeof(int)*2);
+    
+    if(!result){
+        return NULL;
+    }
+    //find total XOR
+    for (i=0;i<size;i++){
+        TotalXOR ^= arr[i];
+        //nXOR ^=i;
+    }
+    //printf("%d num %d \n",TotalXOR,n);
+    
+    //*** imp to loop till <=n
+    for (i=1;i<=n;i++){
+        TotalXOR ^=i;
+    }
+    //two repeated elements 
+    //TotalXOR= TotalXOR ^ nXOR;
+    
+    //printf("%d\n",TotalXOR);
+    //printf("%x\n",TotalXOR);
+    //printf("%x\n",~(TotalXOR-1));
+    //
+    lbitSet =TotalXOR & -(TotalXOR-1);
+    //printf("%d\n",lbitSet);
+
+    for (i=0;i<size;i++){
+        if(arr[i]^lbitSet)
+            result[0]=result[0]^arr[i];
+        else
+            result[1]=result[1]^arr[i];        
+    }
+    //*** imp to loop till <=n
+    for (i=1;i<=n;i++){
+        if(i^lbitSet)//i
+            result[0]=result[0]^i;
+        else
+            result[1]=result[1]^i;        
+    }
 
 
+    return result;
+}
 
-
+//print duplicates 
+///will modify the array and only positive elements are present 
+void findduplicate (int arr[],int size){
+    int i;
+    for (i=0;i<size;i++){
+        if(arr[abs(arr[i])]>=0){
+            arr[abs(arr[i])] =-arr[abs(arr[i])];
+        }
+        else
+        {
+            printf("%d\t",abs(arr[i]) );
+        }
+    }
+}
 
 
 
@@ -216,14 +318,27 @@ int main ()
     printf("\nTotal bits till inout number 0-n is %d \n",caltotal(checkNum));
     printf("Size of interger %ld  ", sizeof(int));
     */
-    int listnum[20] ={1,1,1,2,2,2,8};
+    int listnum[] ={1,2,4,4,1,3,3,5,6,2};
     int size = (sizeof(listnum)/sizeof(listnum[0]));
-    printf("%d\n",getSingle(listnum,size));
+    //printf("%d\n",getSingle(listnum,size));
     //int num =detectonce(listnum,size); 
     //printf("%d\n",num);
     //detectwounique(listnum,size);
+    //printf("number updated %d\n",listnum[0]);
     //displayshift(1,0);
+    //int x=0;
+    //scanf("%d",&x);
+    //printf("div by three if zero => %d ",divbythree(x));
 
+    //int *res= tworepeating(listnum,size);
+    //if(res){
+     //   printf("repeating elements %d,%d \n",res[0],res[1]);
+    //}
+    //free(res);
+    //res=NULL;
+
+
+    findduplicate(listnum,size);
     /*
     for (i = 0; i < size; ++i)
     {

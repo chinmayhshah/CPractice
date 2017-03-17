@@ -23,7 +23,8 @@ void printArray(int Arr[],int size){
 //Bubble Sort 
 //Bubble up the largest element 
 /*
-Worst and Average Case Time Complexity: O(n*n). Worst case occurs when array is reverse sorted.
+Worst and Average Case Time Complexity: O(n*n).
+Worst case occurs when array is reverse sorted.
 Best Case Time Complexity: O(n). Best case occurs when array is already sorted.
 Auxiliary Space: O(1)
 Boundary Cases: Bubble sort takes minimum time (Order of n) when elements are already sorted.
@@ -150,9 +151,9 @@ void Merge(int Arr[],int start,int mid,int end){
 			Arr[k]=RightArr[j];
 			j++;
 		}
-		if(LeftArr[i]%7==0){
-			printf("Found element @ %d\n",LeftArr[i]);
-		}
+		//if(LeftArr[i]%7==0){
+		//	printf("Found element @ %d\n",LeftArr[i]);
+		//}
 		k++;
 
 	}
@@ -180,15 +181,16 @@ void MergeSort(int Arr[],int start,int end){
 	
 	if(start < end){
 		int mid = start + (end -start)/2 ;
-		//if(mid < end/2)
+		if(mid < end/2)
+			return;
 		//	return A;
 	
 		MergeSort(Arr,start,mid);
 		MergeSort(Arr,mid+1,end);
 		
-		if(start==mid && Arr[start]%7==0){
+		//if(start==mid && Arr[start]%7==0){
 			//printf("print %d",Arr[start]);
-		}
+		//}
 			
 		Merge(Arr,start,mid,end);
 
@@ -229,7 +231,7 @@ int main ()
  // BubbleSort(TestArr,size); 		
  // InsertSort(TestArr,size);	
   MergeSort(TestArr,0,size-1);	
-  //printArray(TestArr,size);
+  printArray(TestArr,size);
  		
 
 

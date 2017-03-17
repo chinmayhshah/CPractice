@@ -52,9 +52,9 @@ int BinarySearchRecursive(int *Arr,int Key,int start,int end){
 	   return BinarySearchRecursive(Arr,Key,mid+1,end);
 	}
 	else
-        {
-           return BinarySearchRecursive(Arr,Key,start,mid-1);
-        }
+    {
+       return BinarySearchRecursive(Arr,Key,start,mid-1);
+    }
 
 //	return -1;
 

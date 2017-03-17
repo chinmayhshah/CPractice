@@ -33,7 +33,7 @@ void checkEndianess(){
 	}
 }
 
-
+/*
 // Alligned malloc
 void** Alligned_malloc(size_t bytes_reqd,size_t alignment){
 
@@ -67,7 +67,28 @@ void** Alligned_malloc(size_t bytes_reqd,size_t alignment){
 void alligned_free(void *p){
 	free(((void**)p)[-1]);
 }
+*/
 
+
+void* aligned_malloc(size_t required_bytes, size_t alignment)
+{
+    void* p1; // original block
+    void** p2; // aligned block
+    int offset = alignment - 1 + sizeof(void*);
+    if ((p1 = (void*)malloc(required_bytes + offset)) == NULL)
+    {
+    	printf("failed\n");
+       return NULL;
+    }
+    p2 = (void**)(((size_t)(p1) + offset) & ~(alignment - 1));
+    p2[-1] = p1;
+    return p2;
+}
+
+void aligned_free(void *p)
+{
+    free(((void**)p)[-1]);
+}
 
 //2d array allocation 
 
@@ -151,15 +172,18 @@ int main (){
 	//fork();
 	//printf("\n hello %d\n",getpid());
 	//functionStruct();
-	//int **f = (void*)Alligned_malloc(1000,250);
-	//alligned_free(f);
+	int *f = (void*)aligned_malloc(10,250);
+	*f= 19;
+	printf("%d",*f);
+	printf("%p",&f);
+	aligned_free(f);
 	//int a , b=10;
 	//a = b--- ;
 	//printf("a %d  b %d \n",a,b );
 	//CheckFork();
 	//printf("Fibonacci value for %d",fact(3));
 	//ternary_op();
-	printf("large %d\n",large_3nums(8,12,4));
+	//printf("large %d\n",large_3nums(8,12,4));
 
 	return 0;
 }

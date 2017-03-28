@@ -141,6 +141,18 @@ void detectwounique(int Arr[],int size){
             result[0] = Arr[i] ;
         }
     }
+    /* Better and safer way 
+    for (i = 0; i < size; ++i)
+    {
+        if(lbitSet & Arr[i]){
+            result[0] ^= Arr[i] ;
+        }
+        else
+            result[1] ^= Arr[i] ;
+        
+    }
+    
+    */
 
     
     result[1] = Xortotal ^ result[0];

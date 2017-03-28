@@ -52,7 +52,7 @@ struct node * search(struct node * root,int key){
         return search(root->left,key);
     }   
     
-    return search(root->left,key);
+    return search(root->right,key);
 }
 
 

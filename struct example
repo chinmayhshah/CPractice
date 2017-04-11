@@ -1,0 +1,144 @@
+#include <stdio.h>
+#include <stddef.h>
+#include <string.h>
+#include <stdlib.h>
+
+typedef struct _temp{
+	char c;
+	int i ;
+	float f; 	
+	char str[10];
+}temp;
+
+
+struct Fraction
+{
+	int num;
+	int deno;
+};
+
+struct BitFraction{
+    int x :4;
+    int y :4;
+    int a:8;
+    //int z:20;
+    int z;
+    
+};
+
+void accessprint(){
+
+	temp t;
+	temp *s=&t;
+
+	s->i= 4;
+	s->f= 4.34;
+	s->c='r';
+
+	printf("i value set  %d\n",s->i);
+	printf("f value set %f\n",s->f);
+	printf("c value set  %c\n",s->c);
+	
+	printf("Offset i value  %ld\n",(offsetof(temp,i)) );
+	printf("Offset f value  %ld\n",(offsetof(temp,f)) );
+	printf("Offset c value  %ld\n",(offsetof(temp,c)) );
+
+	printf("Address value  %ld\n",s);
+	printf("Address i value  %ld\n",(s+offsetof(temp,i)) );
+	printf("Address f value  %ld\n",(s+offsetof(temp,f)) );
+	printf("Address c value  %ld\n",(s+offsetof(temp,c)) );
+
+	printf("Address i value  %d \n",*((int*)(s+offsetof(temp,i))) );
+	printf("Address f value  %f \n",*((int*)(s+offsetof(temp,f))) );
+	printf("Address c value  %c \n",*((int*)(s+offsetof(temp,c))) );
+
+
+	*((int*)(s+offsetof(temp,i)))=5;
+	*((int*)(s+offsetof(temp,f)))=5.6;
+	*((int*)(s+offsetof(temp,c)))='p';
+	printf("Address i value  %d \n",*((int*)(s+offsetof(temp,i))) );
+	printf("Address f value  %f \n",*((int*)(s+offsetof(temp,f))) );
+	printf("Address c value  %c \n",*((int*)(s+offsetof(temp,c))) );
+}
+
+
+void assignNULL(){
+	char *p=NULL;
+	char q[100];
+	//strcpy(p,"cannotassign");
+	strcpy(q,"canAssign");
+	printf("\n%s\n", q);
+
+}
+
+//using pointers 
+void swaptwovalues(int *a,int *b){
+	int temp =*a;
+	*a=*b;
+	*b=temp;
+}
+
+//withour temp , but pointers (assuming integers)
+void swapvalues(int *a,int *b){
+	*a=*a ^ *b;
+	*b=*a ^ *b;
+	*a=*a ^ *b;
+}
+
+
+
+//generic swap function using pointers 
+
+void* genericSwap(void *a,void *b,int size){
+
+	//(void*)a = (int*)a
+	//(void*)b = (int*)b
+	void *temp = malloc(size);
+	if(!temp){
+		return NULL;
+	}
+	memcpy(temp,a,size);
+	memcpy(a,b,size);
+	memcpy(b,temp,size);
+
+	free(temp);
+	temp=NULL;
+}
+
+void swapTest(){
+	int a=10,b=20;
+	//
+	//printf("Before swap values %d %d \n",a,b);
+	//swapvalues(&a,&b);
+	//printf("Swap values %d %d \n",a,b);
+	
+	struct Fraction f1 = {3 , 4};
+	struct Fraction f2 = {1 , 2}; 
+	printf("Before swap values %d/%d   %d/%d \n",f1.num,f1.deno,f2.num,f2.deno);
+	genericSwap(&f1,&f2,sizeof(struct Fraction));
+	printf("After swap values %d/%d   %d/%d \n",f1.num,f1.deno,f2.num,f2.deno);
+	
+	char str1[]="Hello";
+	char str2[]="World";
+	int size=sizeof(str1);
+	if(sizeof(str2) > sizeof(str1)){
+		size = sizeof(str2);
+	}
+
+	printf("Before swap value %s %s \n",str1,str2);
+	genericSwap(&str1,&str2,size);
+	printf("after swap value %s %s \n",str1,str2);
+}
+
+
+int main(int argc, char const *argv[])
+{
+	
+	struct BitFraction b;
+	//accessprint();
+	
+	//assignNULL();
+	//swapTest();
+    printf("size %ld ",sizeof(b));
+	return 0;
+}

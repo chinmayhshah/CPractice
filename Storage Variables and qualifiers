@@ -1,0 +1,92 @@
+//Static variable return and update from driver /main function 
+//
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//int globalvalue =20;
+int globalvalue;
+
+
+int * returnGlobal(){
+    
+    return &globalvalue;
+}
+
+// return Static(by address)
+int *returnStatic(){
+    //static int i =10;
+    static int i;
+    printf("Value of i(static): %d \n",i);
+    return &i;
+}
+
+
+/*
+    int *returnRegister(){
+        register int i =10;
+        //static int i;
+        printf("Value of i(static): %d \n",i);
+        return &i;
+    }
+     In function 'returnRegister':
+    30:5: error: address of register variable 'i' requested
+         return &i;
+*/
+
+/*
+int *returnPointerAuto(){
+    int i =10;
+ 
+    printf("Value of i: %d \n",i);
+    return &i;// cant return address of local variable 
+}
+*/
+
+//return Auto(by value)
+int returnAuto(){
+    int i =10;
+    printf("Value of i(Auto): %d \n",i);
+    return i;// cant return value of local variable 
+}
+
+int main ()
+{
+    int *temp=(int*)malloc(sizeof(int));
+    printf("\n\n Experiment with static storage class\n\n");
+    temp = returnStatic();
+    printf("Return of Static value %d \n",*temp);
+    //UPdate the value of 
+    *temp = 20;
+    printf("update value of Static value %d \n",*temp);
+    
+    temp = returnStatic();
+    printf("Return of Static value %d\n",*temp);
+    
+    printf("\n\nExperiment with auto storage class\n\n");
+    //temp = returnPointerAuto(); //invalid
+    *temp = returnAuto();
+    printf("Return of Auto value %d\n",*temp);
+    
+    printf("\n\nExperiment with global variable\n\n");
+    temp = returnGlobal();
+    printf("Return Global value %d\n",*temp);
+    //globalvalue=30;
+    printf("Direct Global value %d\n",globalvalue);
+    temp = returnGlobal();
+    printf("Return updated Global value %d\n",*temp);
+    
+    
+    /*
+        printf("\n\nExperiment with register variable\n\n");
+        temp = returnGlobal();
+        printf("Return register value %d\n",*temp);
+        //globalvalue=30;
+        printf("Direct register value %d\n",globalvalue);
+        temp = returnRegister();
+        printf("Return updated register value %d\n",*temp);
+    */
+    
+    //free(temp);/* invalid as the memory allocated in Data seg (initialized area) */
+    temp=NULL;//remove dangling pointer
+}

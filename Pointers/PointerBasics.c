@@ -28,7 +28,13 @@ printf("Integer address: %p\n",&x);
  printf("\ntotal bytes diff p2 => P1 %ld \n",(char*)ptr2-(char*) ptr1);
 /*
 
-Array name gives the address of first element in array. So when we do '*ptr1 = arr;', ptr1 starts holding the address of element 10. 'arr + 5' gives the address of 6th element as arithmetic is done using pointers. So 'ptr2-ptr1' gives 5. When we do '(char *)ptr2', ptr2 is type-casted to char pointer and size of character is one byte, pointer arithmetic happens considering character pointers. So we get 5*sizeof(int)/sizeof(char) as a difference of two pointers
+Array name gives the address of first element in array. So when we do '*ptr1 = arr;',
+ptr1 starts holding the address of element 10.
+'arr + 5' gives the address of 6th element as arithmetic is done using pointers.
+So 'ptr2-ptr1' gives 5. 
+When we do '(char *)ptr2', ptr2 is type-casted to char pointer and size of character is one byte, 
+pointer arithmetic happens considering character pointers. 
+So we get 5*sizeof(int)/sizeof(char) as a difference of two pointers
 */
 }
 

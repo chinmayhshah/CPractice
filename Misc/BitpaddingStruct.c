@@ -70,7 +70,14 @@ printf("sizeof(structd_t) = %d\n", sizeof(structe_t));
 
 return 0;
 }
-
+/*
+Output
+sizeof(structa_t) = 4
+sizeof(structb_t) = 8
+sizeof(structc_t) = 24
+sizeof(structd_t) = 16
+sizeof(structd_tah) = 32
+*/
 /*
 sizeof(structa_t) = 4
 sizeof(structb_t) = 8

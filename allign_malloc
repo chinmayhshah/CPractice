@@ -1,0 +1,38 @@
+#include <stdio.h>
+#include <stdlib.h>
+                    //reqd_bytes like 100 //alignment in number of bits like 16 and 32 bit
+void * align_malloc(size_t reqd_bytes, size_t alignment){
+    
+    void * org_ptr ;
+    void ** align_ptr;//to restore return pointer to 
+    
+    //Calculation of the extra space required for bookeeping and alignment
+    int offset = (size_t)(alignment -1) + sizeof(void *);
+    
+    
+    //allocate meomry 
+    if ((org_ptr = (void *)malloc(reqd_bytes + offset)) == NULL ){
+        return NULL;
+    }
+    printf("%p \n",org_ptr);
+    //Calculation for  pointer using masking 
+    align_ptr = (void **)(((size_t)org_ptr+offset) & ~(alignment-1));
+    align_ptr[-1] = org_ptr;
+    
+    return align_ptr;
+    
+}
+
+void align_free(void * ptr){
+    
+    free(((void**)ptr)[-1]);
+}
+
+int main() {
+    
+    char * ptr = align_malloc(100,16);
+    printf("%p \n",ptr);
+    align_free(ptr);
+	//code
+	return 0;
+}
